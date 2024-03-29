@@ -17,7 +17,7 @@ class Sales_DAL_Class:
    #         connection.commit()
 
 
-    def retrieveAllEmployees(self):
+    def retrieveSales(self):
         connectionString = 'Driver={SQL Server};Server=localhost;Database=pubs;Trusted_Connection=yes;'
         commandText = 'EXEC [dbo].[RetrieveSales]'
         with pyodbc.connect(connectionString) as connection:

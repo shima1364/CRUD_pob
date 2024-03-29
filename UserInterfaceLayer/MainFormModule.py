@@ -1,6 +1,7 @@
 from tkinter import *
 from .EmployeeFormModule import EmployeeFormClass
 from.AuthorsFormModule import AuthorFormClass
+from .SalesTable import SalesFormClass
 
 
 class MainFormClass:
@@ -24,6 +25,11 @@ class MainFormClass:
             authorFormObject = AuthorFormClass()
             authorFormObject.authorFormload()
 
+        def salesFormLoad():
+            mainFormObject.destroy()
+            salesFormObject = SalesFormClass()
+            salesFormObject.salesFormload()
+
 
        # def employeeTableLoad():
            # mainFormObject.destroy()
@@ -42,6 +48,9 @@ class MainFormClass:
 
         btnAuthorCRUD = Button(mainFormObject, text='Author CRUD', command=authorFormLoad)
         btnAuthorCRUD.grid(row=2, column=0, padx=20, pady=20)
+
+        btnSales = Button(mainFormObject, text='Sales', command=salesFormLoad)
+        btnSales.grid(row=3, column=0, padx=20, pady=20)
 
 
 
