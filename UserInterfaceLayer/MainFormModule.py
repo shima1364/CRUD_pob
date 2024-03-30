@@ -1,7 +1,8 @@
 from tkinter import *
 from .EmployeeFormModule import EmployeeFormClass
-from.AuthorsFormModule import AuthorFormClass
+from .AuthorsFormModule import AuthorFormClass
 from .SalesTable import SalesFormClass
+from .TitleFormModule import TitleFormClass
 
 
 class MainFormClass:
@@ -30,15 +31,21 @@ class MainFormClass:
             salesFormObject = SalesFormClass()
             salesFormObject.salesFormload()
 
+        def titleFormLoad():
+            mainFormObject.destroy()
+            titleFormObject = TitleFormClass()
+            titleFormObject.TitleFormload()
 
-       # def employeeTableLoad():
-           # mainFormObject.destroy()
-            # Create a new window or frame to display the retrieved data
+
+
+        # def employeeTableLoad():
+        # mainFormObject.destroy()
+        # Create a new window or frame to display the retrieved data
         #    employeeTableObject = EmployeeTableClass()
-            # Example: Create a new window
-         #   employeeTableWindow = Toplevel(employeeTableObject)
-          #  employeeTableWindow.title('Employee Table')
-            # Add code to display the retrieved data in the new window
+        # Example: Create a new window
+        #   employeeTableWindow = Toplevel(employeeTableObject)
+        #  employeeTableWindow.title('Employee Table')
+        # Add code to display the retrieved data in the new window
 
         lblWelcomeMessage = Label(mainFormObject, text=f'Welcome {fname} {lname}')
         lblWelcomeMessage.grid(row=0, column=1, padx=10, pady=10)
@@ -52,6 +59,6 @@ class MainFormClass:
         btnSales = Button(mainFormObject, text='Sales', command=salesFormLoad)
         btnSales.grid(row=3, column=0, padx=20, pady=20)
 
-
-
+        btnTitle = Button(mainFormObject, text='Title', command=titleFormLoad)
+        btnTitle.grid(row=4, column=0, padx=20, pady=20)
         mainFormObject.mainloop()

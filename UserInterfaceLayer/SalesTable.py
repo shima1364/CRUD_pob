@@ -58,7 +58,7 @@ class SalesFormClass:
                 tree.delete(row)
             # Insert retrieved data into the treeview
             for row in data:
-                value = (row[2], row[3], row[6], row[7])
+                value = (row[7], row[3], row[6], row[2])
 
                 tree.insert("", "end", values=value)
 
@@ -126,10 +126,10 @@ class SalesFormClass:
         tree = ttk.Treeview(salesFormObject, columns=(
             'Date', 'qty', 'storeName', 'Title'), show='headings')
 
-        tree.heading('#1', text='Date')
+        tree.heading('#1', text='Title')
         tree.heading('#2', text='qty')
         tree.heading('#3', text='storeName')
-        tree.heading('#4', text='Title')
+        tree.heading('#4', text='Date')
         tree.pack(expand=True, fill='both')
         tree.grid(row=10, column=0, columnspan=3, padx=10, pady=10)
 
