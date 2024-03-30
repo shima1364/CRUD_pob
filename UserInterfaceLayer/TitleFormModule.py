@@ -29,7 +29,6 @@ class TitleFormClass:
             advance = txtadvance.get()
             royalty = txtroyalty.get()
             ytd_sales = txtytd_sales.get()
-            ytd_sales = txtytd_sales.get()
             notes = txtnotes.get()
             pubdate = txtpubdate.get()
 

@@ -3,6 +3,7 @@ from .EmployeeFormModule import EmployeeFormClass
 from .AuthorsFormModule import AuthorFormClass
 from .SalesTable import SalesFormClass
 from .TitleFormModule import TitleFormClass
+from .StorFormModule import StorFormClass
 
 
 class MainFormClass:
@@ -36,6 +37,11 @@ class MainFormClass:
             titleFormObject = TitleFormClass()
             titleFormObject.TitleFormload()
 
+        def storFormLoad():
+            mainFormObject.destroy()
+            storFormObject = StorFormClass()
+            storFormObject.storFormload()
+
 
 
         # def employeeTableLoad():
@@ -61,4 +67,7 @@ class MainFormClass:
 
         btnTitle = Button(mainFormObject, text='Title', command=titleFormLoad)
         btnTitle.grid(row=4, column=0, padx=20, pady=20)
+
+        btnStor = Button(mainFormObject, text='Stor', command=storFormLoad)
+        btnStor.grid(row=5, column=0, padx=20, pady=20)
         mainFormObject.mainloop()
