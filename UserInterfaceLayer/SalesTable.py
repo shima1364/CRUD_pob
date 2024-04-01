@@ -4,12 +4,10 @@ from tkcalendar import DateEntry
 from BusinessLogicLayer.Sales_BLL import Sales_BLL_Class
 from Model.saleModel import SaleModel_Class
 
-
-
 class SaleFormClass:
     def __init__(self):
-        pass
-
+        self.stores_dict = {}
+        self.titles_dict = {}
 
     def salesFormload(self):
         salesFormObject = Tk()
@@ -22,12 +20,12 @@ class SaleFormClass:
         salesFormObject.geometry('+{}+{}'.format(x, y))
 
         def saleRegister():
-            stor_id = txtstor_id.get()
-            ord_num = txtord_num.get()
-            ord_date = txtord_date.get()
-            qty = txtqty.get()
-            payterms = txtpayterms.get()
-            title_id = txttitle_id.get()
+            stor_id = self.txtstor_id.get()
+            ord_num = self.txtord_num.get()
+            ord_date = self.txtord_date.get()
+            qty = self.txtqty.get()
+            payterms = self.txtpayterms.get()
+            title_id = self.txttitle_id.get()
 
             SalesModel_Object = SaleModel_Class(stor_id=stor_id, ord_num=ord_num, ord_date=ord_date, qty=qty,
                                                 payterms=payterms, title_id=title_id)
@@ -63,52 +61,67 @@ class SaleFormClass:
             for row in data:
                 tree.insert("", "end", values=row)
 
+        def on_store_selected(event):
+            # Retrieve selected store name and set its ID
+            selected_store_name = store_combo.get()
+            self.txtstor_id.set(self.stores_dict[selected_store_name])
+
+        def on_title_selected(event):
+            # Retrieve selected title name and set its ID
+            selected_title_name = title_combo.get()
+            self.txttitle_id.set(self.titles_dict[selected_title_name])
+
         lblstor_id = Label(salesFormObject, text='stor_id: ')
         lblstor_id.grid(row=0, column=0, padx=10, pady=10)
-        txtstor_id = StringVar()
+        self.txtstor_id = StringVar()
         storesNamesObject = retrieve_storesNames()
-        storesNames = []
+        store_names = []
         for row in storesNamesObject:
-            storesNames.append(row[0])
-            txtstor_id.set(row[0])
+            store_id, store_name = row
+            self.stores_dict[store_name] = store_id
+            store_names.append(store_name)
 
-        entstor_id = ttk.Combobox(salesFormObject, width=40, textvariable=txtstor_id, values=storesNames)
-        entstor_id.grid(row=0, column=1, padx=10, pady=10)
+        store_combo = ttk.Combobox(salesFormObject, width=40, textvariable=self.txtstor_id, values=store_names)
+        store_combo.grid(row=0, column=1, padx=10, pady=10)
+        store_combo.bind("<<ComboboxSelected>>", on_store_selected)
 
         lblord_num = Label(salesFormObject, text='ord_num: ')
         lblord_num.grid(row=1, column=0, padx=10, pady=10)
-        txtord_num = IntVar()
-        entord_num = ttk.Entry(salesFormObject, width=40, textvariable=txtord_num)
+        self.txtord_num = IntVar()
+        entord_num = ttk.Entry(salesFormObject, width=40, textvariable=self.txtord_num)
         entord_num.grid(row=1, column=1, padx=10, pady=10)
 
         lblord_date = Label(salesFormObject, text='Order Date: ')  # Corrected label text
         lblord_date.grid(row=2, column=0, padx=10, pady=10)
-        txtord_date = StringVar()
-        entord_date = DateEntry(salesFormObject, width=40, textvariable=txtord_date)
+        self.txtord_date = StringVar()
+        entord_date = DateEntry(salesFormObject, width=40, textvariable=self.txtord_date)
         entord_date.grid(row=2, column=1, padx=10, pady=10)
 
         lblqty = Label(salesFormObject, text='qty: ')
         lblqty.grid(row=3, column=0, padx=10, pady=10)
-        txtqty = IntVar()
-        entqty = ttk.Entry(salesFormObject, width=40, textvariable=txtqty)
+        self.txtqty = IntVar()
+        entqty = ttk.Entry(salesFormObject, width=40, textvariable=self.txtqty)
         entqty.grid(row=3, column=1, padx=10, pady=10)
 
         lblpayterms = Label(salesFormObject, text='payterms: ')
         lblpayterms.grid(row=4, column=0, padx=10, pady=10)
-        txtpayterms = IntVar()
-        entpayterms = ttk.Entry(salesFormObject, width=40, textvariable=txtpayterms)
+        self.txtpayterms = IntVar()
+        entpayterms = ttk.Entry(salesFormObject, width=40, textvariable=self.txtpayterms)
         entpayterms.grid(row=4, column=1, padx=10, pady= 10)
 
         lbltitle_id = Label(salesFormObject, text='title_id: ')
         lbltitle_id.grid(row=5, column=0, padx=10, pady=10)
-        txttitle_id = StringVar()
+        self.txttitle_id = StringVar()
         titlesNamesObject = retrieve_titlesName()
-        titlesNames = []
+        title_names = []
         for row in titlesNamesObject:
-            titlesNames.append(row[0])
-            txttitle_id.set(row[0])
-        enttitle_id = ttk.Combobox(salesFormObject, width=40, textvariable=txttitle_id, values=titlesNames)
-        enttitle_id.grid(row=5, column=1, padx=10, pady=10)
+            title_id, title_name = row
+            self.titles_dict[title_name] = title_id
+            title_names.append(title_name)
+
+        title_combo = ttk.Combobox(salesFormObject, width=40, textvariable=self.txttitle_id, values=title_names)
+        title_combo.grid(row=5, column=1, padx=10, pady=10)
+        title_combo.bind("<<ComboboxSelected>>", on_title_selected)
 
         btnSaleRegister = ttk.Button(salesFormObject, text='Register Sale', width=20, command=saleRegister)
         btnSaleRegister.grid(row=6, column=1, padx=10, pady=20, sticky='e')
@@ -130,3 +143,4 @@ class SaleFormClass:
         populate_treeview()
 
         salesFormObject.mainloop()
+
