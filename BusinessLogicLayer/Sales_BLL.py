@@ -7,8 +7,8 @@ class Sales_BLL_Class:
         pass
 
     def getSalesList(self):
-        self.SalesDLL = Sales_DAL_Class()
-        return self.SalesDLL.retrieveSales()
+        sales_DAL_Object = Sales_DAL_Class()
+        return sales_DAL_Object.retrieveSales()
 
     def registerSales(self, sales: SaleModel_Class):
         sales_DAL_Object = Sales_DAL_Class()
@@ -17,7 +17,6 @@ class Sales_BLL_Class:
     def getStoresNames(self):
         self.SalesDLL = Sales_DAL_Class()
         return self.SalesDLL.retrieveStoresNames()
-
 
     def getTitlesNames(self):
         self.SalesDLL = Sales_DAL_Class()

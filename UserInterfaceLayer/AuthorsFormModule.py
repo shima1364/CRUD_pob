@@ -12,7 +12,7 @@ class AuthorFormClass:
     def authorFormload(self):
         authorFormObject = Tk()
         authorFormObject.title('Author Form')
-        authorFormObject.geometry('1000x735')
+        authorFormObject.geometry('700x735')
         authorFormObject.configure(bg='#cff5ff')
         authorFormObject.iconbitmap('images/employeeIcon.ico')
         authorFormObject.resizable(0, 0)
@@ -62,7 +62,7 @@ class AuthorFormClass:
             for row in data:
                 values = (row[0], row[2], row[1])
                 tree.insert("", "end", values=values)
-                tree.heading(row[0], text=row[0])
+
 
         lblau_id = Label(authorFormObject, text='au_id: ')
         lblau_id.grid(row=0, column=0, padx=10, pady=10)

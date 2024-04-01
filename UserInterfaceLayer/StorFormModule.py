@@ -12,7 +12,7 @@ class StorFormClass:
     def storFormload(self):
         storFormObject = Tk()
         storFormObject.title('Stor Form')
-        storFormObject.geometry('1000x735')
+        storFormObject.geometry('700x735')
         storFormObject.configure(bg='#cff5ff')
         storFormObject.iconbitmap('images/employeeIcon.ico')
         storFormObject.resizable(0, 0)

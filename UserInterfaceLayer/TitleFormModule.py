@@ -12,7 +12,7 @@ class TitleFormClass:
     def TitleFormload(self):
         TitleFormObject = Tk()
         TitleFormObject.title('Title Form')
-        TitleFormObject.geometry('1000x735')
+        TitleFormObject.geometry('700x735')
         TitleFormObject.configure(bg='#cff5ff')
         TitleFormObject.iconbitmap('images/employeeIcon.ico')
         TitleFormObject.resizable(0, 0)

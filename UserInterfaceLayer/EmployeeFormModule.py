@@ -12,7 +12,7 @@ class EmployeeFormClass:
     def employeeCRUDFormload(self):
         employeeFormObject = Tk()
         employeeFormObject.title('Employee Form')
-        employeeFormObject.geometry('1000x735')
+        employeeFormObject.geometry('700x735')
         employeeFormObject.configure(bg='#cff5ff')
         employeeFormObject.iconbitmap('images/employeeIcon.ico')
         employeeFormObject.resizable(0, 0)
