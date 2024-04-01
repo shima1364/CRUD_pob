@@ -1,4 +1,5 @@
 from DataAccessLayer.Sales_DAL import Sales_DAL_Class
+from Model.saleModel import SaleModel_Class
 
 
 class Sales_BLL_Class:
@@ -6,9 +7,18 @@ class Sales_BLL_Class:
         pass
 
     def getSalesList(self):
-       self.SalesDLL = Sales_DAL_Class()
-       return self.SalesDLL.retrieveSales()
+        self.SalesDLL = Sales_DAL_Class()
+        return self.SalesDLL.retrieveSales()
 
-    #def registerEmployee(self, employee: EmployeeModel_Class):
-    #    EmployeeCRUD_DAL_Object = EmployeeCRUD_DAL_Class()
-    #    EmployeeCRUD_DAL_Object.registerEmployee_DAL(employee)
+    def registerSales(self, sales: SaleModel_Class):
+        sales_DAL_Object = Sales_DAL_Class()
+        sales_DAL_Object.AddSale_DAL(sales)
+
+    def getStoresNames(self):
+        self.SalesDLL = Sales_DAL_Class()
+        return self.SalesDLL.retrieveStoresNames()
+
+
+    def getTitlesNames(self):
+        self.SalesDLL = Sales_DAL_Class()
+        return self.SalesDLL.retrieveTitlesNames()

@@ -61,7 +61,7 @@ class StorFormClass:
 
         lblstor_id = Label(storFormObject, text='stor_id: ')
         lblstor_id.grid(row=0, column=0, padx=10, pady=10)
-        txtstor_id = StringVar()
+        txtstor_id = IntVar()
         entstor_id = ttk.Entry(storFormObject, width=40, textvariable=txtstor_id)
         entstor_id.grid(row=0, column=1, padx=10, pady=10)
 
@@ -85,28 +85,28 @@ class StorFormClass:
 
         lblstate = Label(storFormObject, text='state: ')
         lblstate.grid(row=4, column=0, padx=10, pady=10)
-        txtstate = DoubleVar()
+        txtstate = StringVar()
         entstate = ttk.Entry(storFormObject, width=40, textvariable=txtstate)
         entstate.grid(row=4, column=1, padx=10, pady=10)
 
         lblzip = Label(storFormObject, text='zip: ')
         lblzip.grid(row=5, column=0, padx=10, pady=10)
-        txtzip = DoubleVar()
+        txtzip = IntVar()
         entzip = ttk.Entry(storFormObject, width=40, textvariable=txtzip)
         entzip.grid(row=5, column=1, padx=10, pady=10)
 
         btnStorRegister = ttk.Button(storFormObject, text='Stor Register... ', width=20,
-                                     command=storRegister())
+                                     command=storRegister)
         btnStorRegister.grid(row=10, column=1, padx=10, pady=20, sticky='e')
 
         btnResetForm = ttk.Button(storFormObject, text='ResetForm', width=16, command=resetForm)
         btnResetForm.grid(row=10, column=1, padx=10, pady=20, sticky='w')
 
         tree = ttk.Treeview(storFormObject, columns=(
-            'Employee ID', 'First Name', 'Last Name'), show='headings')
-        tree.heading('Employee ID', text='Employee ID')
-        tree.heading('First Name', text='First Name')
-        tree.heading('Last Name', text='Last Name')
+            'Name', 'Address', 'City'), show='headings')
+        tree.heading('Name', text='Name')
+        tree.heading('Address', text='Address')
+        tree.heading('City', text='City')
         tree.grid(row=11, column=0, columnspan=3, padx=10, pady=10)
 
         btnRefresh = ttk.Button(storFormObject, text='Refresh Table', width=16, command=populate_treeview)

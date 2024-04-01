@@ -2,11 +2,14 @@ from tkinter import *
 from tkinter import ttk
 from tkcalendar import DateEntry
 from BusinessLogicLayer.Sales_BLL import Sales_BLL_Class
+from Model.saleModel import SaleModel_Class
 
 
-class SalesFormClass:
+
+class SaleFormClass:
     def __init__(self):
         pass
+
 
     def salesFormload(self):
         salesFormObject = Tk()
@@ -18,123 +21,112 @@ class SalesFormClass:
         y = int(salesFormObject.winfo_screenheight() / 2 - 400 / 2)
         salesFormObject.geometry('+{}+{}'.format(x, y))
 
-        # def authorRegister():
-        #    au_id = txtau_id.get()
-        #    firstName = txtfirstName.get()
-        #    lastName = txtlastName.get()
-        #    phone = txtphone.get()
-        #    address = txtaddress.get()
-        #    city = txtcity.get()
-        #    state = txtstate.get()
-        #    zip = txtzip.get()
-        #    contract = txtcontract.get()
+        def saleRegister():
+            stor_id = txtstor_id.get()
+            ord_num = txtord_num.get()
+            ord_date = txtord_date.get()
+            qty = txtqty.get()
+            payterms = txtpayterms.get()
+            title_id = txttitle_id.get()
 
-        #    AuthorModel_Object = AuthorsModel_Class(au_id=au_id, au_lname=lastName, au_fname=firstName, phone=phone,
-        #                                            address=address
-        #                                            , city=city, state=state, zip=zip, contract=contract)
+            SalesModel_Object = SaleModel_Class(stor_id=stor_id, ord_num=ord_num, ord_date=ord_date, qty=qty,
+                                                payterms=payterms, title_id=title_id)
 
-        #    Author_BLL_Object = Author_BLL_Class()
-        #    Author_BLL_Object.registerAuthor(AuthorModel_Object)
-        #    resetForm()
+            Sales_BLL_Object = Sales_BLL_Class()
+            Sales_BLL_Object.registerSales(SalesModel_Object)
+            resetForm()
 
-        # def resetForm():
-        #    for widget in authorFormObject.winfo_children():
-        #        if isinstance(widget, ttk.Entry) or isinstance(widget, DateEntry):
-        #            widget.delete(0, END)
+        def resetForm():
+            for widget in salesFormObject.winfo_children():
+                if isinstance(widget, ttk.Entry) or isinstance(widget, DateEntry):
+                    widget.delete(0, END)
 
         def retrieve_data():
-
             SalesRetrieve_BLL_Object = Sales_BLL_Class()
             data = SalesRetrieve_BLL_Object.getSalesList()
             return data
 
-            # Function to populate the treeview widget with retrieved data
+        def retrieve_storesNames():
+            SalesRetrieve_BLL_Object = Sales_BLL_Class()
+            storesNames = SalesRetrieve_BLL_Object.getStoresNames()
+            return storesNames
+
+        def retrieve_titlesName():
+            SalesRetrieve_BLL_Object = Sales_BLL_Class()
+            titlesName = SalesRetrieve_BLL_Object.getTitlesNames()
+            return titlesName
 
         def populate_treeview():
-            #   # Retrieve data from the database
             data = retrieve_data()
-            # Clear existing treeview data
             for row in tree.get_children():
                 tree.delete(row)
-            # Insert retrieved data into the treeview
             for row in data:
-                value = (row[7], row[3], row[6], row[2])
+                tree.insert("", "end", values=row)
 
-                tree.insert("", "end", values=value)
+        lblstor_id = Label(salesFormObject, text='stor_id: ')
+        lblstor_id.grid(row=0, column=0, padx=10, pady=10)
+        txtstor_id = StringVar()
+        storesNamesObject = retrieve_storesNames()
+        storesNames = []
+        for row in storesNamesObject:
+            storesNames.append(row[0])
+            txtstor_id.set(row[0])
 
-        #    lblau_id = Label(authorFormObject, text='au_id: ')
-        #    lblau_id.grid(row=0, column=0, padx=10, pady=10)
-        #    txtau_id = StringVar()
-        #    entau_id = ttk.Entry(authorFormObject, width=40, textvariable=txtau_id)
-        #    entau_id.grid(row=0, column=1, padx=10, pady=10)
+        entstor_id = ttk.Combobox(salesFormObject, width=40, textvariable=txtstor_id, values=storesNames)
+        entstor_id.grid(row=0, column=1, padx=10, pady=10)
 
-        #    lblfirstName = Label(authorFormObject, text='FirstName: ')
-        #    lblfirstName.grid(row=1, column=0, padx=10, pady=10)
-        #    txtfirstName = StringVar()
-        #    entfirstName = ttk.Entry(authorFormObject, width=40, textvariable=txtfirstName)
-        #    entfirstName.grid(row=1, column=1, padx=10, pady=10)
+        lblord_num = Label(salesFormObject, text='ord_num: ')
+        lblord_num.grid(row=1, column=0, padx=10, pady=10)
+        txtord_num = IntVar()
+        entord_num = ttk.Entry(salesFormObject, width=40, textvariable=txtord_num)
+        entord_num.grid(row=1, column=1, padx=10, pady=10)
 
-        #    lbllastName = Label(authorFormObject, text='lastName: ')
-        #    lbllastName.grid(row=3, column=0, padx=10, pady=10)
-        #    txtlastName = StringVar()
-        #    entlastName = ttk.Entry(authorFormObject, width=40, textvariable=txtlastName)
-        #    entlastName.grid(row=3, column=1, padx=10, pady=10)
+        lblord_date = Label(salesFormObject, text='Order Date: ')  # Corrected label text
+        lblord_date.grid(row=2, column=0, padx=10, pady=10)
+        txtord_date = StringVar()
+        entord_date = DateEntry(salesFormObject, width=40, textvariable=txtord_date)
+        entord_date.grid(row=2, column=1, padx=10, pady=10)
 
-        #    lblphone = Label(authorFormObject, text='phone: ')
-        #    lblphone.grid(row=2, column=0, padx=10, pady=10)
-        #    txtphone = IntVar()
-        #    entphone = ttk.Entry(authorFormObject, width=40, textvariable=txtphone)
-        #    entphone.grid(row=2, column=1, padx=10, pady=10)
+        lblqty = Label(salesFormObject, text='qty: ')
+        lblqty.grid(row=3, column=0, padx=10, pady=10)
+        txtqty = IntVar()
+        entqty = ttk.Entry(salesFormObject, width=40, textvariable=txtqty)
+        entqty.grid(row=3, column=1, padx=10, pady=10)
 
-        #    lbladdress = Label(authorFormObject, text='address: ')
-        #    lbladdress.grid(row=4, column=0, padx=10, pady=10)
-        #    txtaddress = StringVar()
-        #    entaddress = ttk.Entry(authorFormObject, width=40, textvariable=txtaddress)
-        #    entaddress.grid(row=4, column=1, padx=10, pady=10)
+        lblpayterms = Label(salesFormObject, text='payterms: ')
+        lblpayterms.grid(row=4, column=0, padx=10, pady=10)
+        txtpayterms = IntVar()
+        entpayterms = ttk.Entry(salesFormObject, width=40, textvariable=txtpayterms)
+        entpayterms.grid(row=4, column=1, padx=10, pady= 10)
 
-        #    lblcity = Label(authorFormObject, text='city: ')
-        #    lblcity.grid(row=5, column=0, padx=10, pady=10)
-        #    txtcity = StringVar()
-        #    entcity = ttk.Entry(authorFormObject, width=40, textvariable=txtcity)
-        #    entcity.grid(row=5, column=1, padx=10, pady=10)
+        lbltitle_id = Label(salesFormObject, text='title_id: ')
+        lbltitle_id.grid(row=5, column=0, padx=10, pady=10)
+        txttitle_id = StringVar()
+        titlesNamesObject = retrieve_titlesName()
+        titlesNames = []
+        for row in titlesNamesObject:
+            titlesNames.append(row[0])
+            txttitle_id.set(row[0])
+        enttitle_id = ttk.Combobox(salesFormObject, width=40, textvariable=txttitle_id, values=titlesNames)
+        enttitle_id.grid(row=5, column=1, padx=10, pady=10)
 
-        #    lblstate = Label(authorFormObject, text='state: ')
-        #    lblstate.grid(row=6, column=0, padx=10, pady=10)
-        #    txtstate = StringVar()
-        #    entstate = ttk.Entry(authorFormObject, width=40, textvariable=txtstate)
-        #    entstate.grid(row=6, column=1, padx=10, pady=10)
+        btnSaleRegister = ttk.Button(salesFormObject, text='Register Sale', width=20, command=saleRegister)
+        btnSaleRegister.grid(row=6, column=1, padx=10, pady=20, sticky='e')
 
-        #    lblzip = Label(authorFormObject, text='zip: ')
-        #    lblzip.grid(row=7, column=0, padx=10, pady=10)
-        #    txtzip = IntVar()
-        #    entzip = ttk.Entry(authorFormObject, width=36, textvariable=txtzip)
-        #    entzip.grid(row=7, column=1, padx=10, pady=10)
+        btnResetForm = ttk.Button(salesFormObject, text='Reset Form', width=16, command=resetForm)
+        btnResetForm.grid(row=6, column=1, padx=10, pady=20, sticky='w')
 
-        #    lblcontract = Label(authorFormObject, text='contract: ')
-        #    lblcontract.grid(row=8, column=0, padx=10, pady=10)
-        #    txtcontract = StringVar()
-        #    entcontract = ttk.Entry(authorFormObject, width=40, textvariable=txtcontract)
-        #    entcontract.grid(row=8, column=1, padx=10, pady=10)
-
-        #    btnAuthorRegister = ttk.Button(authorFormObject, text='Author Register... ', width=20,
-        #                                  command=authorRegister)
-        #    btnAuthorRegister.grid(row=9, column=1, padx=10, pady=20, sticky='e')
-
-        #    btnResetForm = ttk.Button(authorFormObject, text='ResetForm', width=16, command=resetForm)
-        #    btnResetForm.grid(row=9, column=1, padx=10, pady=20, sticky='w')
-
-        tree = ttk.Treeview(salesFormObject, columns=(
-            'Date', 'qty', 'storeName', 'Title'), show='headings')
-
+        tree = ttk.Treeview(salesFormObject, columns=('Title', 'Qty', 'Store Name', 'Order Date'), show='headings')
         tree.heading('#1', text='Title')
-        tree.heading('#2', text='qty')
-        tree.heading('#3', text='storeName')
-        tree.heading('#4', text='Date')
+        tree.heading('#2', text='Qty')
+        tree.heading('#3', text='Store Name')
+        tree.heading('#4', text='Order Date')
         tree.pack(expand=True, fill='both')
-        tree.grid(row=10, column=0, columnspan=3, padx=10, pady=10)
+        tree.grid(row=7, column=0, columnspan=3, padx=10, pady=10)
 
         btnRefresh = ttk.Button(salesFormObject, text='Refresh Table', width=16, command=populate_treeview)
-        btnRefresh.grid(row=11)
+        btnRefresh.grid(row=8, column=1, pady=10)
+
         populate_treeview()
 
         salesFormObject.mainloop()

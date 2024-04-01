@@ -62,6 +62,7 @@ class AuthorFormClass:
             for row in data:
                 values = (row[0], row[2], row[1])
                 tree.insert("", "end", values=values)
+                tree.heading(row[0], text=row[0])
 
         lblau_id = Label(authorFormObject, text='au_id: ')
         lblau_id.grid(row=0, column=0, padx=10, pady=10)
@@ -134,5 +135,7 @@ class AuthorFormClass:
         btnRefresh = ttk.Button(authorFormObject, text='Refresh Table', width=16, command=populate_treeview)
         btnRefresh.grid(row=11)
         populate_treeview()
+
+
 
         authorFormObject.mainloop()
